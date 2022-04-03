@@ -1,11 +1,16 @@
+/* eslint-disable @next/next/link-passhref */
 import React from 'react';
 import tw from 'tailwind-styled-components';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
+
 const Search = () => {
   return (
     <Wrapper>
       <ButtonContainer>
-        <BackButton src='https://cdn-icons-png.flaticon.com/512/271/271218.png' />
+        <Link href='/'>
+          <BackButton src='https://cdn-icons-png.flaticon.com/512/271/271218.png' />
+        </Link>
       </ButtonContainer>
       <InputContainer>
         <FromToIcons>
@@ -23,9 +28,9 @@ const Search = () => {
         <StarIcon src=' https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Star_icon_stylized.svg/1077px-Star_icon_stylized.svg.png' />
         Saved Places
       </SavedPlaces>
-      <ConfirmLocation>
-        <ButtonText>Confirm Location</ButtonText>
-      </ConfirmLocation>
+      <Link href='/confirm'>
+        <ConfirmLocation>Confirm Location</ConfirmLocation>
+      </Link>
     </Wrapper>
   );
 };
@@ -34,7 +39,7 @@ export default Search;
 
 const Wrapper = tw.div`bg-gray-200 h-screen `;
 const ButtonContainer = tw.div`bg-white px-4`;
-const BackButton = tw.img`h-10`;
+const BackButton = tw.img`h-10 cursor-pointer`;
 const InputContainer = tw.div`bg-white flex items-center px-4 mb-2`;
 const FromToIcons = tw.div`w-10 flex flex-col mr-2 items-center`;
 const Circle = tw.img`h-5`;
@@ -45,5 +50,4 @@ const Input = tw.input`h-10 bg-gray-200 my-6 rounded-2 p-4 outline-none border-n
 const PlusIcon = tw.img`h-10 w-10 ml-3`;
 const SavedPlaces = tw.div`flex items-center bg-white px-4 py-2 `;
 const StarIcon = tw.img`bg-gray-400 w-10 h-10 p-2 rounded-full mr-2`;
-const ConfirmLocation = tw.button`flex white bg-black px-3 py-1 justify-center my-2 mx-auto  `;
-const ButtonText = tw.p`text-white `;
+const ConfirmLocation = tw.div` text-white bg-black text-center mt-2 mx-4 py-3 text-2xl cursor-pointer `;
