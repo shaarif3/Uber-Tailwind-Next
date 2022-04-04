@@ -30,5 +30,5 @@ const Map = (props) => {
   };
   return <Wrapper id='map'>Map</Wrapper>;
 };
-const Wrapper = tw.div`flex-1 `;
+const Wrapper = tw.div`flex-1 h-1/2 `;
 export default Map;
