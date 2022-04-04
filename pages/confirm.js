@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import tw from 'tailwind-styled-components';
 import Map from './components/Map';
+import { useRouter } from 'next/router';
 const Confirm = () => {
+  const router = useRouter();
+  const { pickup, dropoff } = router.query;
+
   const [pickupCoordinates, setPickupCoordinates] = useState();
   const [dropoffCoordinates, setDropoffCoordinates] = useState();
-  const getPickupCoordinates = () => {
-    const pickup = 'Karachi';
+  const getPickupCoordinates = (pickup) => {
     fetch(
       `https://api.mapbox.com/geocoding/v5/mapbox.places/${pickup}.json?` +
         new URLSearchParams({
@@ -19,8 +22,7 @@ const Confirm = () => {
         setPickupCoordinates(data.features[0].center);
       });
   };
-  const getDropoffCoordinates = () => {
-    const dropoff = 'Sukkur';
+  const getDropoffCoordinates = (dropoff) => {
     fetch(
       `https://api.mapbox.com/geocoding/v5/mapbox.places/${dropoff}.json?` +
         new URLSearchParams({
@@ -36,9 +38,9 @@ const Confirm = () => {
   };
 
   useEffect(() => {
-    getPickupCoordinates();
-    getDropoffCoordinates();
-  }, []);
+    getPickupCoordinates(pickup);
+    getDropoffCoordinates(dropoff);
+  }, [pickup, dropoff]);
   return (
     <Wrapper>
       <Map

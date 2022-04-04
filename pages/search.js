@@ -1,10 +1,12 @@
 /* eslint-disable @next/next/link-passhref */
-import React from 'react';
+import React, { useState } from 'react';
 import tw from 'tailwind-styled-components';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 const Search = () => {
+  const [pickup, setPickup] = useState();
+  const [dropoff, setDropoff] = useState();
   return (
     <Wrapper>
       <ButtonContainer>
@@ -19,8 +21,16 @@ const Search = () => {
           <Square src='https://static.vecteezy.com/system/resources/previews/001/209/957/large_2x/square-png.png' />
         </FromToIcons>
         <InputBoxes>
-          <Input placeholder='Enter Pickup Location' />
-          <Input placeholder='Where to?' />
+          <Input
+            value={pickup}
+            placeholder='Enter Pickup Location'
+            onChange={(e) => setPickup(e.target.value)}
+          />
+          <Input
+            value={dropoff}
+            placeholder='Where to?'
+            onChange={(e) => setDropoff(e.target.value)}
+          />
         </InputBoxes>
         <PlusIcon src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDrsTHiRUy0kM8-5Sq2zZ3MnAde1KyXp5iV96vrIlDsq7vtSxeOFk2vbedpPB9q8O0OAI&usqp=CAU' />
       </InputContainer>
@@ -28,7 +38,15 @@ const Search = () => {
         <StarIcon src=' https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Star_icon_stylized.svg/1077px-Star_icon_stylized.svg.png' />
         Saved Places
       </SavedPlaces>
-      <Link href='/confirm'>
+      <Link
+        href={{
+          pathname: '/confirm',
+          query: {
+            pickup: pickup,
+            dropoff: dropoff,
+          },
+        }}
+      >
         <ConfirmLocation>Confirm Location</ConfirmLocation>
       </Link>
     </Wrapper>
