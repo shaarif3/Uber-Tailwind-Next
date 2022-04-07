@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import tw from 'tailwind-styled-components';
 import { carList } from '../data/carList';
@@ -5,13 +6,13 @@ import Link from 'next/link';
 const RideSelector = ({ pickupCoordinates, dropoffCoordinates }) => {
   const [rideDuration, setRideDuration] = useState(0);
   useEffect(() => {
-    rideDuration =
-      fetch(`https://api.mapbox.com/directions/v5/mapbox/driving/${pickupCoordinates[0]},${pickupCoordinates[1]};${dropoffCoordinates[0]},${dropoffCoordinates[1]}? access_token=
-      'pk.eyJ1Ijoic2hhYXJpZiIsImEiOiJjbDFlNDR4cTQwZzd3M2tuMmt4bXNxNjBwIn0.t4F-DMl4cvSPrS2p3QJ0FA',`)
-        .then((res) => res.json)
-        .then((data) => {
-          setRideDuration(data.routes[0].duration / 100);
-        });
+    rideDuration = fetch(
+      `https://api.mapbox.com/directions/v5/mapbox/driving/${pickupCoordinates[0]},${pickupCoordinates[1]};${dropoffCoordinates[0]},${dropoffCoordinates[1]}?access_token=pk.eyJ1Ijoic2hhYXJpZiIsImEiOiJjbDFlNDR4cTQwZzd3M2tuMmt4bXNxNjBwIn0.t4F-DMl4cvSPrS2p3QJ0FA`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setRideDuration(data.routes[0].duration / 100);
+      });
   }, [pickupCoordinates, dropoffCoordinates]);
   return (
     <Wrapper>

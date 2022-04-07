@@ -24,6 +24,8 @@ const Confirm = () => {
         setPickupCoordinates(data.features[0].center);
       });
   };
+  console.log(pickupCoordinates);
+
   const getDropoffCoordinates = (dropoff) => {
     fetch(
       `https://api.mapbox.com/geocoding/v5/mapbox.places/${dropoff}.json?` +
