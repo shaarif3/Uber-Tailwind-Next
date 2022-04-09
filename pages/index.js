@@ -1,12 +1,29 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 import tw from 'tailwind-styled-components';
 import Map from './components/Map';
 import Link from 'next/link';
+import { auth } from '../firebase';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { useRouter } from 'next/router';
 
 export default function Home() {
+  const [user, setUser] = useState(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    return onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser({ name: user.displayName, photoUrl: user.photoURL });
+      } else {
+        setUser(null);
+        router.push('/login');
+      }
+    });
+  }, []);
+  console.log(user, 'vhvhv');
   return (
     <Wrapper>
       <Map />
@@ -14,8 +31,11 @@ export default function Home() {
         <Header>
           <UberLogo src='https://seekvectorlogo.net/wp-content/uploads/2019/07/uber-technologies-inc-vector-logo.png' />
           <Profile>
-            <Name>Shaarif Shahid</Name>
-            <UserImage src='https://avatars.githubusercontent.com/u/57302453?v=4' />
+            <Name>{user && user?.name}</Name>
+            <UserImage
+              src={user && user?.photoUrl}
+              onClick={() => signOut(auth)}
+            />
           </Profile>
         </Header>
         <ActionButtons>
@@ -50,7 +70,7 @@ const Header = tw.div`flex justify-between items-center`;
 const UberLogo = tw.img`h-20`;
 const Profile = tw.div`flex items-center`;
 const Name = tw.div`mr-2 w-20 text-sm`;
-const UserImage = tw.img`h-16 w-16 rounded-full border border-gray-800 p-px`;
+const UserImage = tw.img`h-16 w-16 rounded-full border border-gray-800 p-px cursor-pointer`;
 const ActionButtons = tw.div`flex `;
 const ActionButton = tw.div` cursor-pointer flex flex-col justify-center rounded-lg bg-gray-200 flex-1 m-1 h-32 items-center transform hover:scale-105 transition text-xl`;
 const ActionButtonImage = tw.img`h-3/5`;
